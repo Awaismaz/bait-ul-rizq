@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{{ project.title }} - Bait ul Rizq{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                {% if project.image %}
+                <img src="{{ project.image.url }}" class="img-fluid rounded-4 shadow-lg mb-4" alt="{{ project.title }}">
+                {% else %}
+                <img src="https://images.unsplash.com/photo-1556740758-90de374c12ad?w=800" class="img-fluid rounded-4 shadow-lg mb-4" alt="{{ project.title }}">
+                {% endif %}
+
+                <div class="mb-4">
+                    <span class="badge bg-primary me-2">{{ project.get_status_display }}</span>
+                    {% if project.category %}
+                    <span class="badge bg-secondary">{{ project.category }}</span>
+                    {% endif %}
+                </div>
+
+                <h1 class="display-5 fw-bold mb-3">{{ project.title }}</h1>
+                <p class="lead text-muted mb-4">{{ project.description }}</p>
+
+                <div class="card border-0 bg-light mb-4">
+                    <div class="card-body">
+                        <h5 class="fw-bold mb-3"><i class="bi bi-person-circle"></i> {% trans "Beneficiary Information" %}</h5>
+                        <p><strong>{% trans "Name" %}:</strong> {{ project.beneficiary_name }}</p>
+                        <p><strong>{% trans "Family Size" %}:</strong> {{ project.family_size }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card border-0 shadow-lg">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold mb-4">{% trans "Funding Progress" %}</h5>
+                        <div class="text-center mb-4">
+                            <h2 class="display-4 fw-bold text-primary">{{ project.funding_progress }}%</h2>
+                            <div class="progress mb-2" style="height: 20px;">
+                                <div class="progress-bar bg-success" style="width: {{ project.funding_progress }}%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

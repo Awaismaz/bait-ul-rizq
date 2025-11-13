@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Track My Donation" %} - Bait ul Rizq{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="text-center mb-5">
+                    <i class="bi bi-search display-1 text-primary mb-3"></i>
+                    <h1 class="display-4 fw-bold mb-3">{% trans "Track Your Donation" %}</h1>
+                    <p class="lead text-muted">
+                        {% trans "Enter your 9-digit Donor ID to see your donation history and impact" %}
+                    </p>
+                </div>
+
+                <div class="card border-0 shadow-lg">
+                    <div class="card-body p-5">
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="mb-4">
+                                <label for="donor_id" class="form-label fw-bold">{% trans "Donor ID" %}</label>
+                                <input type="text"
+                                       class="form-control form-control-lg text-center font-monospace"
+                                       id="donor_id"
+                                       name="donor_id"
+                                       placeholder="123456789"
+                                       maxlength="9"
+                                       pattern="[0-9]{9}"
+                                       required
+                                       style="font-size: 1.5rem; letter-spacing: 0.2rem;">
+                                <div class="form-text text-center mt-2">
+                                    {% trans "Enter your 9-digit ID without spaces or dashes" %}
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-lg w-100">
+                                <i class="bi bi-search"></i> {% trans "Look Up Donations" %}
+                            </button>
+                        </form>
+
+                        <hr class="my-4">
+
+                        <div class="text-center">
+                            <h6 class="mb-3">{% trans "Don't have your Donor ID?" %}</h6>
+                            <p class="text-muted small mb-0">
+                                {% trans "Your unique Donor ID was provided when you made your donation. Please check your donation receipt or contact us for assistance." %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Info Section -->
+                <div class="mt-5">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="card border-0 bg-light h-100">
+                                <div class="card-body text-center p-4">
+                                    <i class="bi bi-shield-check fs-2 text-success mb-2"></i>
+                                    <h6 class="fw-bold">{% trans "Private & Secure" %}</h6>
+                                    <p class="small text-muted mb-0">
+                                        {% trans "Your information is protected. Only you can view your donations." %}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card border-0 bg-light h-100">
+                                <div class="card-body text-center p-4">
+                                    <i class="bi bi-eye fs-2 text-primary mb-2"></i>
+                                    <h6 class="fw-bold">{% trans "Complete Transparency" %}</h6>
+                                    <p class="small text-muted mb-0">
+                                        {% trans "See exactly which projects your donations funded." %}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title d-inline-block">{% trans "What You'll See" %}</h2>
+        </div>
+        <div class="row g-4 justify-content-center">
+            <div class="col-md-4 text-center">
+                <div class="bg-white p-4 rounded-3 h-100 shadow-sm">
+                    <i class="bi bi-list-ul fs-1 text-primary mb-3"></i>
+                    <h5 class="fw-bold">{% trans "All Your Donations" %}</h5>
+                    <p class="text-muted mb-0">{% trans "Complete history with dates and amounts" %}</p>
+                </div>
+            </div>
+            <div class="col-md-4 text-center">
+                <div class="bg-white p-4 rounded-3 h-100 shadow-sm">
+                    <i class="bi bi-diagram-3 fs-1 text-success mb-3"></i>
+                    <h5 class="fw-bold">{% trans "Project Allocations" %}</h5>
+                    <p class="text-muted mb-0">{% trans "See which projects received your donations" %}</p>
+                </div>
+            </div>
+            <div class="col-md-4 text-center">
+                <div class="bg-white p-4 rounded-3 h-100 shadow-sm">
+                    <i class="bi bi-graph-up fs-1 text-warning mb-3"></i>
+                    <h5 class="fw-bold">{% trans "Impact Tracking" %}</h5>
+                    <p class="text-muted mb-0">{% trans "Monitor project progress and recoveries" %}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Format donor ID input
+    document.getElementById('donor_id').addEventListener('input', function(e) {
+        this.value = this.value.replace(/\D/g, '').slice(0, 9);
+    });
+</script>
+{% endblock %}

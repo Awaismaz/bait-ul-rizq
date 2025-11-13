@@ -1,0 +1,297 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Home" %} - Bait ul Rizq{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <h1 class="display-3 fw-bold mb-4" data-aos="fade-right">
+                    {% trans "Transforming Lives Through" %}
+                    <span class="text-warning">{% trans "Sustainable Charity" %}</span>
+                </h1>
+                <p class="fs-5 mb-4 urdu-text" data-aos="fade-right" data-aos-delay="100">
+                    زندگیوں کو تبدیل کرنا پائیدار خیرات کے ذریعے
+                </p>
+                <p class="lead mb-4" data-aos="fade-right" data-aos-delay="200">
+                    {% trans "We empower needy individuals with small businesses. Once established, they contribute back, creating a self-sustaining cycle of giving." %}
+                </p>
+                <div data-aos="fade-up" data-aos-delay="300">
+                    <a href="{% url 'projects:project_list' %}" class="btn btn-warning btn-lg me-3 mb-2">
+                        <i class="bi bi-eye"></i> {% trans "View Projects" %}
+                    </a>
+                    <a href="{% url 'core:donor_lookup' %}" class="btn btn-outline-light btn-lg mb-2">
+                        <i class="bi bi-search"></i> {% trans "Track My Donation" %}
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6" data-aos="fade-left">
+                <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=600" alt="Charity" class="img-fluid rounded-4 shadow-lg">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Statistics Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-3" data-aos="zoom-in">
+                <div class="stat-card">
+                    <i class="bi bi-people-fill"></i>
+                    <h3 class="display-5">500+</h3>
+                    <p class="text-muted mb-0">{% trans "Lives Changed" %}</p>
+                </div>
+            </div>
+            <div class="col-md-3" data-aos="zoom-in" data-aos-delay="100">
+                <div class="stat-card">
+                    <i class="bi bi-shop"></i>
+                    <h3 class="display-5">250+</h3>
+                    <p class="text-muted mb-0">{% trans "Businesses Established" %}</p>
+                </div>
+            </div>
+            <div class="col-md-3" data-aos="zoom-in" data-aos-delay="200">
+                <div class="stat-card">
+                    <i class="bi bi-currency-dollar"></i>
+                    <h3 class="display-5">$50K+</h3>
+                    <p class="text-muted mb-0">{% trans "Funds Distributed" %}</p>
+                </div>
+            </div>
+            <div class="col-md-3" data-aos="zoom-in" data-aos-delay="300">
+                <div class="stat-card">
+                    <i class="bi bi-arrow-repeat"></i>
+                    <h3 class="display-5">$20K+</h3>
+                    <p class="text-muted mb-0">{% trans "Recovered & Recycled" %}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title d-inline-block">{% trans "How It Works" %}</h2>
+            <p class="lead text-muted">{% trans "Our Self-Sustaining Model" %}</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-3 text-center" data-aos="fade-up">
+                <div class="p-4">
+                    <div class="rounded-circle bg-primary bg-opacity-10 d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <i class="bi bi-heart-fill fs-1 text-primary"></i>
+                    </div>
+                    <h5 class="fw-bold">1. {% trans "Donate" %}</h5>
+                    <p class="text-muted">{% trans "Generous donors contribute to fund small businesses for needy individuals." %}</p>
+                </div>
+            </div>
+            <div class="col-md-3 text-center" data-aos="fade-up" data-aos-delay="100">
+                <div class="p-4">
+                    <div class="rounded-circle bg-success bg-opacity-10 d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <i class="bi bi-check2-circle fs-1 text-success"></i>
+                    </div>
+                    <h5 class="fw-bold">2. {% trans "Verify" %}</h5>
+                    <p class="text-muted">{% trans "Our team carefully verifies and approves worthy beneficiaries." %}</p>
+                </div>
+            </div>
+            <div class="col-md-3 text-center" data-aos="fade-up" data-aos-delay="200">
+                <div class="p-4">
+                    <div class="rounded-circle bg-warning bg-opacity-10 d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <i class="bi bi-shop fs-1 text-warning"></i>
+                    </div>
+                    <h5 class="fw-bold">3. {% trans "Establish" %}</h5>
+                    <p class="text-muted">{% trans "Beneficiaries establish their businesses and become self-reliant." %}</p>
+                </div>
+            </div>
+            <div class="col-md-3 text-center" data-aos="fade-up" data-aos-delay="300">
+                <div class="p-4">
+                    <div class="rounded-circle bg-info bg-opacity-10 d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                        <i class="bi bi-arrow-repeat fs-1 text-info"></i>
+                    </div>
+                    <h5 class="fw-bold">4. {% trans "Give Back" %}</h5>
+                    <p class="text-muted">{% trans "They contribute back monthly, funding more businesses." %}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Projects -->
+{% if featured_projects %}
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-5">
+            <div>
+                <h2 class="section-title mb-0">{% trans "Featured Projects" %}</h2>
+                <p class="text-muted">{% trans "Help these verified beneficiaries start their journey" %}</p>
+            </div>
+            <a href="{% url 'projects:project_list' %}" class="btn btn-outline-primary">
+                {% trans "View All" %} <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
+        <div class="row g-4">
+            {% for project in featured_projects %}
+            <div class="col-md-6 col-lg-4" data-aos="fade-up">
+                <div class="card h-100">
+                    {% if project.image %}
+                    <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}">
+                    {% else %}
+                    <img src="https://images.unsplash.com/photo-1556742044-3c52d6e88c62?w=400" class="card-img-top" alt="{{ project.title }}">
+                    {% endif %}
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="badge bg-primary">{{ project.get_status_display }}</span>
+                            <span class="badge bg-secondary">{{ project.category }}</span>
+                        </div>
+                        <h5 class="card-title fw-bold">{{ project.title }}</h5>
+                        <p class="card-text text-muted">{{ project.description|truncatewords:20 }}</p>
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between mb-1">
+                                <small class="text-muted">{% trans "Funding Progress" %}</small>
+                                <small class="fw-bold text-primary">{{ project.funding_progress }}%</small>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar bg-success" style="width: {{ project.funding_progress }}%"></div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <small class="text-muted">{% trans "Goal" %}:</small>
+                                <strong class="d-block">{{ project.currency }} {{ project.approved_amount|default:project.requested_amount }}</strong>
+                            </div>
+                            <a href="{% url 'projects:project_detail' project.pk %}" class="btn btn-sm btn-outline-primary">
+                                {% trans "View Details" %} <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Transparency Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0" data-aos="fade-right">
+                <h2 class="section-title">{% trans "Complete Transparency" %}</h2>
+                <p class="lead mb-4">{% trans "Track every penny of your donation" %}</p>
+                <p class="mb-4">
+                    {% trans "We believe in complete transparency. Every donor receives a unique 9-digit ID to track their donations and see exactly which projects they've helped fund. No account needed - just your ID!" %}
+                </p>
+                <ul class="list-unstyled">
+                    <li class="mb-3"><i class="bi bi-check-circle-fill text-success me-2"></i> {% trans "Anonymous tracking with unique ID" %}</li>
+                    <li class="mb-3"><i class="bi bi-check-circle-fill text-success me-2"></i> {% trans "See which projects you funded" %}</li>
+                    <li class="mb-3"><i class="bi bi-check-circle-fill text-success me-2"></i> {% trans "Track project progress in real-time" %}</li>
+                    <li class="mb-3"><i class="bi bi-check-circle-fill text-success me-2"></i> {% trans "View recovery contributions" %}</li>
+                </ul>
+                <a href="{% url 'core:donor_lookup' %}" class="btn btn-primary btn-lg">
+                    <i class="bi bi-search"></i> {% trans "Track My Donation" %}
+                </a>
+            </div>
+            <div class="col-lg-6" data-aos="fade-left">
+                <div class="card border-0 shadow-lg">
+                    <div class="card-body p-5">
+                        <div class="text-center mb-4">
+                            <i class="bi bi-shield-check fs-1 text-primary"></i>
+                            <h4 class="mt-3">{% trans "Donor ID Example" %}</h4>
+                        </div>
+                        <div class="bg-light p-4 rounded-3 mb-3">
+                            <div class="text-center">
+                                <p class="text-muted mb-2">{% trans "Your Unique Donor ID" %}</p>
+                                <h2 class="display-5 font-monospace fw-bold text-primary">123-456-789</h2>
+                            </div>
+                        </div>
+                        <p class="text-muted text-center mb-0">
+                            <small>{% trans "Use this ID to track all your donations and their impact" %}</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Latest Blog Posts -->
+{% if featured_posts %}
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-5">
+            <div>
+                <h2 class="section-title mb-0">{% trans "Latest Updates" %}</h2>
+                <p class="text-muted">{% trans "Success stories and news from our community" %}</p>
+            </div>
+            <a href="{% url 'blog:blog_list' %}" class="btn btn-outline-primary">
+                {% trans "View All" %} <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
+        <div class="row g-4">
+            {% for post in featured_posts %}
+            <div class="col-md-4" data-aos="fade-up">
+                <div class="card h-100">
+                    {% if post.featured_image %}
+                    <img src="{{ post.featured_image.url }}" class="card-img-top" alt="{{ post.title }}">
+                    {% else %}
+                    <img src="https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?w=400" class="card-img-top" alt="{{ post.title }}">
+                    {% endif %}
+                    <div class="card-body">
+                        <div class="mb-2">
+                            <span class="badge bg-info">{{ post.category }}</span>
+                            <small class="text-muted ms-2"><i class="bi bi-calendar3"></i> {{ post.published_date|date:"M d, Y" }}</small>
+                        </div>
+                        <h5 class="card-title fw-bold">{{ post.title }}</h5>
+                        <p class="card-text text-muted">{{ post.excerpt|truncatewords:15 }}</p>
+                        <a href="{% url 'blog:blog_detail' post.slug %}" class="btn btn-sm btn-outline-primary">
+                            {% trans "Read More" %} <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Call to Action -->
+<section class="py-5 bg-primary text-white">
+    <div class="container text-center">
+        <div class="row justify-content-center">
+            <div class="col-lg-8" data-aos="zoom-in">
+                <h2 class="display-5 fw-bold mb-4">{% trans "Ready to Make a Difference?" %}</h2>
+                <p class="lead mb-4">{% trans "Whether you want to donate, need help, or volunteer - we're here for you" %}</p>
+                <div class="d-flex flex-wrap justify-content-center gap-3">
+                    <a href="{% url 'projects:project_apply' %}" class="btn btn-warning btn-lg">
+                        <i class="bi bi-file-earmark-text"></i> {% trans "Apply for Help" %}
+                    </a>
+                    <a href="{% url 'core:volunteer_application' %}" class="btn btn-outline-light btn-lg">
+                        <i class="bi bi-people"></i> {% trans "Become a Volunteer" %}
+                    </a>
+                    <a href="{% url 'core:donor_lookup' %}" class="btn btn-light btn-lg">
+                        <i class="bi bi-search"></i> {% trans "Track Donation" %}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<!-- AOS Animation Library -->
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({
+        duration: 800,
+        once: true
+    });
+</script>
+{% endblock %}

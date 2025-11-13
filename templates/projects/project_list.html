@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Projects" %} - Bait ul Rizq{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section py-5">
+    <div class="container text-center">
+        <h1 class="display-4 fw-bold mb-3">{% trans "Our Projects" %}</h1>
+        <p class="lead">{% trans "Help verified beneficiaries start their journey to self-reliance" %}</p>
+    </div>
+</section>
+
+<!-- Projects Grid -->
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4">
+            {% for project in projects %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100">
+                    {% if project.image %}
+                    <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}">
+                    {% else %}
+                    <img src="https://images.unsplash.com/photo-1556740758-90de374c12ad?w=400" class="card-img-top" alt="{{ project.title }}">
+                    {% endif %}
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="badge bg-primary">{{ project.get_status_display }}</span>
+                            {% if project.category %}
+                            <span class="badge bg-secondary">{{ project.category }}</span>
+                            {% endif %}
+                        </div>
+                        <h5 class="card-title fw-bold">{{ project.title }}</h5>
+                        <p class="text-muted mb-2">
+                            <i class="bi bi-person"></i> {{ project.beneficiary_name }}
+                        </p>
+                        <p class="card-text text-muted flex-grow-1">{{ project.description|truncatewords:25 }}</p>
+
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between mb-1">
+                                <small class="text-muted">{% trans "Progress" %}</small>
+                                <small class="fw-bold text-primary">{{ project.funding_progress }}%</small>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar bg-success" style="width: {{ project.funding_progress }}%"></div>
+                            </div>
+                            <div class="d-flex justify-content-between mt-2">
+                                <small class="text-muted">{% trans "Raised" %}: {{ project.currency }} {{ project.total_funded }}</small>
+                                <small class="text-muted">{% trans "Goal" %}: {{ project.currency }} {{ project.approved_amount|default:project.requested_amount }}</small>
+                            </div>
+                        </div>
+
+                        <a href="{% url 'projects:project_detail' project.pk %}" class="btn btn-outline-primary w-100">
+                            {% trans "View Details" %} <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <div class="alert alert-info text-center">
+                    <i class="bi bi-info-circle fs-1 d-block mb-3"></i>
+                    <h4>{% trans "No projects available at this time" %}</h4>
+                    <p class="mb-0">{% trans "Please check back later for new projects" %}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination -->
+        {% if is_paginated %}
+        <nav class="mt-5">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">{% trans "Previous" %}</a>
+                </li>
+                {% endif %}
+
+                {% for num in page_obj.paginator.page_range %}
+                <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                </li>
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">{% trans "Next" %}</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="py-5 bg-light">
+    <div class="container text-center">
+        <h3 class="mb-4">{% trans "Need Help?" %}</h3>
+        <p class="lead mb-4">{% trans "If you're in need and want to start a small business, apply now!" %}</p>
+        <a href="{% url 'projects:project_apply' %}" class="btn btn-primary btn-lg">
+            <i class="bi bi-file-earmark-text"></i> {% trans "Apply for Help" %}
+        </a>
+    </div>
+</section>
+{% endblock %}

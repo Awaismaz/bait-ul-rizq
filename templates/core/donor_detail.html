@@ -1,0 +1,209 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Donation Details" %} - Bait ul Rizq{% endblock %}
+
+{% block content %}
+<!-- Header -->
+<section class="bg-primary text-white py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h1 class="display-5 fw-bold mb-3">
+                    <i class="bi bi-person-check-fill"></i> {% trans "Donor Dashboard" %}
+                </h1>
+                <p class="lead mb-0">
+                    {% trans "Thank you for your generosity!" %} {{ object.get_display_name }}
+                </p>
+            </div>
+            <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                <div class="bg-white bg-opacity-10 p-3 rounded-3 d-inline-block">
+                    <small class="d-block text-white-50">{% trans "Your Donor ID" %}</small>
+                    <h3 class="font-monospace mb-0">{{ object.donor_id }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Statistics -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body text-center p-4">
+                        <i class="bi bi-currency-dollar fs-1 text-success mb-3"></i>
+                        <h3 class="fw-bold text-success mb-2">${{ total_donated|floatformat:2 }}</h3>
+                        <p class="text-muted mb-0">{% trans "Total Donated" %}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body text-center p-4">
+                        <i class="bi bi-receipt fs-1 text-primary mb-3"></i>
+                        <h3 class="fw-bold text-primary mb-2">{{ donations.count }}</h3>
+                        <p class="text-muted mb-0">{% trans "Total Donations" %}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body text-center p-4">
+                        <i class="bi bi-shop fs-1 text-warning mb-3"></i>
+                        <h3 class="fw-bold text-warning mb-2">{{ allocations.count }}</h3>
+                        <p class="text-muted mb-0">{% trans "Projects Supported" %}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Donation History -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="section-title mb-4">{% trans "Your Donation History" %}</h2>
+        {% if donations %}
+        <div class="row g-4">
+            {% for donation in donations %}
+            <div class="col-md-6">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div>
+                                <h4 class="fw-bold text-primary mb-1">
+                                    {{ donation.currency }} {{ donation.amount|floatformat:2 }}
+                                </h4>
+                                <small class="text-muted">
+                                    <i class="bi bi-calendar3"></i> {{ donation.date_received|date:"F d, Y" }}
+                                </small>
+                            </div>
+                            <span class="badge bg-success">
+                                <i class="bi bi-check-circle"></i> {{ donation.payment_method }}
+                            </span>
+                        </div>
+
+                        {% if donation.reference_number %}
+                        <p class="mb-2"><small class="text-muted">{% trans "Ref" %}: {{ donation.reference_number }}</small></p>
+                        {% endif %}
+
+                        <hr>
+
+                        <h6 class="fw-bold mb-3">{% trans "Funded Projects" %}:</h6>
+                        {% if donation.allocations.all %}
+                        <div class="list-group list-group-flush">
+                            {% for allocation in donation.allocations.all %}
+                            <div class="list-group-item px-0 py-2">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <a href="{% url 'projects:project_detail' allocation.project.pk %}" class="text-decoration-none fw-bold">
+                                            {{ allocation.project.title }}
+                                        </a>
+                                        <br>
+                                        <small class="text-muted">{{ allocation.project.beneficiary_name }}</small>
+                                    </div>
+                                    <span class="badge bg-primary">
+                                        {{ donation.currency }} {{ allocation.amount|floatformat:2 }}
+                                    </span>
+                                </div>
+                                <div class="progress mt-2" style="height: 5px;">
+                                    <div class="progress-bar bg-success" style="width: {{ allocation.project.funding_progress }}%"></div>
+                                </div>
+                                <small class="text-muted">{{ allocation.project.funding_progress }}% funded</small>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        <div class="alert alert-info mb-0">
+                            <i class="bi bi-info-circle"></i> {% trans "This donation is pending allocation" %}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="alert alert-warning">
+            <i class="bi bi-exclamation-triangle"></i> {% trans "No donations found for this donor ID" %}
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- All Projects Supported -->
+{% if allocations %}
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="section-title mb-4">{% trans "All Projects You've Supported" %}</h2>
+        <div class="row g-4">
+            {% for allocation in allocations %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card border-0 shadow-sm h-100">
+                    {% if allocation.project.image %}
+                    <img src="{{ allocation.project.image.url }}" class="card-img-top" alt="{{ allocation.project.title }}">
+                    {% else %}
+                    <img src="https://images.unsplash.com/photo-1556740758-90de374c12ad?w=400" class="card-img-top" alt="{{ allocation.project.title }}">
+                    {% endif %}
+                    <div class="card-body">
+                        <div class="mb-2">
+                            <span class="badge bg-{{ allocation.project.status|lower|slice:':4' == 'pend' and 'warning' or allocation.project.status|lower|slice:':4' == 'appr' and 'info' or allocation.project.status|lower|slice:':4' == 'fund' and 'primary' or allocation.project.status|lower|slice:':4' == 'esta' and 'success' or 'secondary' }}">
+                                {{ allocation.project.get_status_display }}
+                            </span>
+                        </div>
+                        <h5 class="card-title fw-bold">{{ allocation.project.title }}</h5>
+                        <p class="text-muted mb-2">
+                            <i class="bi bi-person"></i> {{ allocation.project.beneficiary_name }}
+                        </p>
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between mb-1">
+                                <small class="text-muted">{% trans "Your Contribution" %}</small>
+                                <strong class="text-primary">{{ allocation.donation.currency }} {{ allocation.amount|floatformat:2 }}</strong>
+                            </div>
+                            <div class="d-flex justify-content-between mb-1">
+                                <small class="text-muted">{% trans "Project Goal" %}</small>
+                                <small>{{ allocation.project.currency }} {{ allocation.project.approved_amount|default:allocation.project.requested_amount|floatformat:2 }}</small>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar bg-success" style="width: {{ allocation.project.funding_progress }}%"></div>
+                            </div>
+                            <small class="text-muted">{{ allocation.project.funding_progress }}% funded</small>
+                        </div>
+                        <a href="{% url 'projects:project_detail' allocation.project.pk %}" class="btn btn-sm btn-outline-primary w-100">
+                            {% trans "View Project Details" %} <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Impact Message -->
+<section class="py-5 bg-primary text-white">
+    <div class="container text-center">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <i class="bi bi-heart-fill display-3 mb-4"></i>
+                <h2 class="display-5 fw-bold mb-4">{% trans "Thank You for Your Generosity!" %}</h2>
+                <p class="lead mb-4">
+                    {% trans "Your donations are creating lasting change in people's lives. Through your support," %}
+                    {% blocktrans count counter=allocations.count %}
+                    {{ counter }} beneficiary is building a better future.
+                    {% plural %}
+                    {{ counter }} beneficiaries are building a better future.
+                    {% endblocktrans %}
+                </p>
+                <a href="{% url 'projects:project_list' %}" class="btn btn-warning btn-lg">
+                    <i class="bi bi-eye"></i> {% trans "See More Projects" %}
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
