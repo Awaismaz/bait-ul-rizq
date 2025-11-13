@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Thank You" %} - Bait ul Rizq{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 text-center">
+                <i class="bi bi-check-circle-fill text-success display-1 mb-4"></i>
+                <h1 class="display-4 fw-bold mb-3">{% trans "Jazak Allah Khair!" %}</h1>
+                <p class="lead mb-4">{% trans "Thank you for your generous donation!" %}</p>
+
+                <div class="card border-0 shadow-lg mb-4">
+                    <div class="card-body p-5">
+                        <h5 class="fw-bold mb-3">{% trans "Your Unique Donor ID" %}</h5>
+                        <div class="bg-light p-4 rounded-3 mb-3">
+                            <h2 class="display-5 font-monospace fw-bold text-primary">{{ donor_id }}</h2>
+                        </div>
+                        <p class="text-muted mb-3">{% trans "Save this ID to track your donations" %}</p>
+                        <p class="fw-bold">{% trans "Amount Donated" %}: {{ donation_currency }} {{ donation_amount }}</p>
+                    </div>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <a href="{% url 'core:donor_detail' donor_id %}" class="btn btn-primary btn-lg">
+                        <i class="bi bi-eye"></i> {% trans "View My Donations" %}
+                    </a>
+                    <a href="{% url 'core:home' %}" class="btn btn-outline-secondary">
+                        <i class="bi bi-house"></i> {% trans "Return to Homepage" %}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

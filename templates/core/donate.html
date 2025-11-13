@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Donate Now" %} - Bait ul Rizq{% endblock %}
+
+{% block content %}
+<section class="bg-gradient py-5" style="background: linear-gradient(135deg, #2c5282 0%, #1e4d7b 100%); color: white;">
+    <div class="container text-center">
+        <h1 class="display-3 fw-bold mb-3">{% trans "Let Me Serve Allah" %}</h1>
+        <p class="display-6 mb-4 urdu-text">مجھے اللہ کی خدمت کرنے دیں</p>
+        <p class="lead">{% trans "Your donation helps needy families establish sustainable businesses" %}</p>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-lg">
+                    <div class="card-body p-5">
+                        <h3 class="fw-bold mb-4">{% trans "Make Your Donation" %}</h3>
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-bold">{% trans "Full Name" %} *</label>
+                                    <input type="text" class="form-control" name="name" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-bold">{% trans "Email" %} *</label>
+                                    <input type="email" class="form-control" name="email" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-bold">{% trans "Phone" %} *</label>
+                                    <input type="tel" class="form-control" name="phone" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-bold">{% trans "Community" %} *</label>
+                                    <select class="form-select" name="community" required>
+                                        <option value="1">{% trans "International" %}</option>
+                                        <option value="2">{% trans "Pakistani" %}</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <label class="form-label fw-bold">{% trans "Address" %}</label>
+                                    <textarea class="form-control" name="address" rows="2"></textarea>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-bold">{% trans "Amount" %} *</label>
+                                    <input type="number" class="form-control" name="amount" min="1" step="0.01" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-bold">{% trans "Currency" %} *</label>
+                                    <select class="form-select" name="currency" required>
+                                        <option value="USD">USD</option>
+                                        <option value="PKR">PKR</option>
+                                        <option value="EUR">EUR</option>
+                                        <option value="GBP">GBP</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <label class="form-label fw-bold">{% trans "Payment Method" %} *</label>
+                                    <select class="form-select" name="payment_method" id="paymentMethod" required>
+                                        <option value="MOBILE">JazzCash / EasyPaisa</option>
+                                        <option value="BANK">Bank Transfer (UBL/Askari)</option>
+                                        <option value="CARD">Credit/Debit Card</option>
+                                        <option value="CASH">Cash</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div id="paymentInstructions" class="alert alert-info mt-3" style="display: none;">
+                                <h6 class="fw-bold">{% trans "Payment Instructions" %}:</h6>
+                                <div id="mobilePayment" style="display: none;">
+                                    <p><strong>JazzCash:</strong> 0300-XXXXXXX</p>
+                                    <p><strong>EasyPaisa:</strong> 0321-XXXXXXX</p>
+                                </div>
+                                <div id="bankPayment" style="display: none;">
+                                    <p><strong>UBL:</strong> PK00XXXXXXXXXXXXXXXXXXXX</p>
+                                    <p><strong>Askari:</strong> PK00XXXXXXXXXXXXXXXXXXXX</p>
+                                </div>
+                            </div>
+
+                            <div class="form-check mb-4">
+                                <input class="form-check-input" type="checkbox" name="is_anonymous">
+                                <label class="form-check-label">{% trans "Anonymous donation" %}</label>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-lg w-100">
+                                <i class="bi bi-heart-fill"></i> {% trans "Complete Donation" %}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card border-0 bg-light">
+                    <div class="card-body p-4">
+                        <h5 class="fw-bold mb-3">{% trans "Why Donate?" %}</h5>
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i> {% trans "100%% to beneficiaries" %}</li>
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i> {% trans "Verified projects" %}</li>
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-success me-2"></i> {% trans "Track your impact" %}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+document.getElementById('paymentMethod').addEventListener('change', function() {
+    const instructions = document.getElementById('paymentInstructions');
+    const mobile = document.getElementById('mobilePayment');
+    const bank = document.getElementById('bankPayment');
+    mobile.style.display = 'none';
+    bank.style.display = 'none';
+    if (this.value === 'MOBILE') {
+        instructions.style.display = 'block';
+        mobile.style.display = 'block';
+    } else if (this.value === 'BANK') {
+        instructions.style.display = 'block';
+        bank.style.display = 'block';
+    } else {
+        instructions.style.display = 'none';
+    }
+});
+</script>
+{% endblock %}
